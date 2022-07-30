@@ -1,7 +1,48 @@
-i like trains programming and VR
+# Visit https://github.com/lowlighter/metrics/blob/master/action.yml for full reference 
+name: Metrics
+on:
+  # Schedule updates (each hour)
+  schedule: [{cron: "0 * * * *"}]
+  # Lines below let you run workflow manually and on each commit
+  push: {branches: ["master", "main"]}
+  workflow_dispatch:
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          # Your GitHub token
+          token: ${{ secrets.METRICS_TOKEN }}
+          # GITHUB_TOKEN is a special auto-generated token restricted to current repository, which is used to push files in it
+          committer_token: ${{ secrets.GITHUB_TOKEN }}
 
-
-I Use javasccript as my main language
-I like to eat potatoes
-I like minecraft
-And my Website is Superintendent.me
+          # Options
+          user: RhysyPiece360
+          template: classic
+          base: header, activity, community, repositories, metadata
+          config_timezone: America/New_York
+          plugin_activity: yes
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_limit: 5
+          plugin_wakatime: yes
+          plugin_wakatime_user: VelvetThePanda
+          plugin_wakatime_sections: time, projects, projects-graphs, languages, languages-graphs, editors, os
+          plugin_wakatime_token: ${{ secrets.WAKATIME_TOKEN }}
+          plugin_wakatime_url: https://waka.velvetthepanda.dev
+          plugin_wakatime_languages_other: yes
+          plugin_isocalendar: yes
+          plugin_languages: yes
+          plugin_languages_colors: github
+          plugin_languages_ignored: Batchfile Python
+          plugin_languages_threshold: 0%
+          plugin_lines: yes                                 # Limit to 4 entries
+          plugin_projects_descriptions: yes                           # Display projects descriptions
+          plugin_followup: yes
+          plugin_followup_sections: repositories, user #
+          plugin_habits: yes
+          plugin_habits_from: 200       # Use 200 events to compute habits
+          plugin_habits_days: 30        # Keep only events from last 14 days
+          plugin_habits_facts: yes      # Display facts section
+          plugin_habits_charts: yes     # Display charts section
